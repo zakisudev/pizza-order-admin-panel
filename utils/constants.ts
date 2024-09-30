@@ -1,4 +1,7 @@
-export const BASE_URL = 'http://localhost:3000/api';
+export const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://pizza.zakisu.com/api'
+    : 'http://localhost:3000/api';
 
 export const orderStatuses = {
   preparing: 'Preparing',
@@ -14,23 +17,23 @@ export const resourceStatuses = {
 export const userRoles = {
   kitchenManager: 'Kitchen Manager',
   cashier: 'Cashier',
-  branchManager: 'Branch Manager'
+  branchManager: 'Branch Manager',
 };
 
 export const userPermissions = {
-  viewResource: "viewResource",
-  addResource: "addResource",
-  updateResource: "updateResource",
-}
+  viewResource: 'viewResource',
+  addResource: 'addResource',
+  updateResource: 'updateResource',
+};
 
 export const adminPermissions = {
-  viewUser: "viewUser",
-  addUser: "addUser",
-  updateUser: "updateUser",
-  deleteUser: "deleteUser",
-  deleteResource: "deleteResource",
-  viewRole: "viewRole",
-  addRole: "addRole",
-  updateRole: "updateRole",
-  deleteRole: 'deleteRole'
-}
+  viewUser: 'viewUser',
+  addUser: 'addUser',
+  updateUser: 'updateUser',
+  deleteUser: 'deleteUser',
+  deleteResource: 'deleteResource',
+  viewRole: 'viewRole',
+  addRole: 'addRole',
+  updateRole: 'updateRole',
+  deleteRole: 'deleteRole',
+};
