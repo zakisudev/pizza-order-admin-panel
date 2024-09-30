@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-header .ant-table-thead>tr>th {
+  background-color: #F6F6F6;
+}
+.react-tooltip {
+  z-index: 9999;
+}
