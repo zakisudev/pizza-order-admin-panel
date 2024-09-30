@@ -12,11 +12,12 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {useState} from 'react';
 import spinner from '@/assets/icons/spinner.svg';
+import { RootState } from '@/redux/rootReducer';
 
 const RegisterPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state : RootState) => state.auth);
   const {
     register,
     handleSubmit,
@@ -24,7 +25,7 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegister = async (data) => {
+  const handleRegister = async (data:any) => {
     setIsLoading(true);
     try {
       const res = await handleRegisterApi(data);
@@ -96,7 +97,7 @@ const RegisterPage = () => {
               />
               {errors?.fullName && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.fullName?.message}
+                  {errors?.fullName?.message as string}
                 </p>
               )}
             </div>
@@ -116,7 +117,7 @@ const RegisterPage = () => {
               />
               {errors?.email && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.email?.message}
+                  {errors?.email?.message as string}
                 </p>
               )}
             </div>
@@ -130,7 +131,6 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="password"
-                name="password"
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
@@ -147,7 +147,7 @@ const RegisterPage = () => {
               />
               {errors?.password && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.password?.message}
+                  {errors?.password?.message as string}
                 </p>
               )}
             </div>
@@ -161,7 +161,6 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
                 {...register('confirmPassword', {
                   required: 'Password confirmation is required',
                   validate: (value) =>
@@ -172,7 +171,7 @@ const RegisterPage = () => {
               />
               {errors?.confirmPassword && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.confirmPassword?.message}
+                  {errors?.confirmPassword?.message as string}
                 </p>
               )}
             </div>
@@ -186,14 +185,13 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="location"
-                name="location"
                 {...register('location', { required: 'Location is required' })}
                 placeholder="Enter your location"
                 className="text-lg border border-gray-300 rounded-md px-3 py-2 h-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors?.location && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.location?.message}
+                  {errors?.location?.message as string}
                 </p>
               )}
             </div>
@@ -207,7 +205,6 @@ const RegisterPage = () => {
               <input
                 type="tel"
                 id="phoneNumber"
-                name="phoneNumber"
                 {...register('phoneNumber', {
                   required: 'Phone number is required',
                 })}
@@ -216,7 +213,7 @@ const RegisterPage = () => {
               />
               {errors?.phoneNumber && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.phoneNumber?.message}
+                  {errors?.phoneNumber?.message as string}
                 </p>
               )}
             </div>
@@ -226,7 +223,6 @@ const RegisterPage = () => {
                 <input
                   type="checkbox"
                   id="terms"
-                  name="terms"
                   {...register('terms', {
                     required: 'You must agree to the terms and conditions',
                   })}
@@ -238,7 +234,7 @@ const RegisterPage = () => {
               </div>
               {errors?.terms && (
                 <p className="pl-4 mt-2 text-xs text-red-500">
-                  {errors?.terms?.message}
+                  {errors?.terms?.message as string}
                 </p>
               )}
             </div>

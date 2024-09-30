@@ -18,25 +18,25 @@ const AddMenu = () => {
     formState: { errors },
     setValue,
   } = useForm();
-  const [isLoading, setIsLoading] = useState();
-  const [toppings, setToppings] = useState([]);
-  const [types, setTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toppings, setToppings] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
   const [image, setImage] = useState(imageUrl || null);
   const [uploading, setUploading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleToppingChange = (e) => {
+  const handleToppingChange = (e: any) => {
     const { name, checked } = e.target;
-    setToppings((prevToppings) =>
-      checked ? [...prevToppings, name] : prevToppings.filter((t) => t !== name)
+    setToppings((prevToppings:any) =>
+      checked ? [...prevToppings, name] : prevToppings.filter((t:any) => t !== name)
     );
   };
 
-  const handleTypeChange = (e) => {
+  const handleTypeChange = (e:any) => {
     const { id, checked } = e.target;
-    setTypes((prevTypes) =>
-      checked ? [...prevTypes, id] : prevTypes.filter((t) => t !== id)
+    setTypes((prevTypes:any) =>
+      checked ? [...prevTypes, id] : prevTypes.filter((t:any) => t !== id)
     );
   };
 
@@ -49,7 +49,7 @@ const AddMenu = () => {
     setTypes([]);
   }
 
-  const handleAddPizza = async (data) => {
+  const handleAddPizza = async (data:any) => {
     try {
       setIsLoading(true);
       data.price = Number(data.price);
@@ -79,11 +79,12 @@ const AddMenu = () => {
     if (!image) return;
 
     setUploading(true);
-    const handleUpload = async (image) => {
+    const handleUpload = async (image:any) => {
       const formData = new FormData();
       formData.append('file', image);
       formData.append('upload_preset', 'pizza-order');
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY || '';
+      formData.append('api_key', apiKey);
 
       try {
         setUploading(true);
@@ -135,7 +136,7 @@ const AddMenu = () => {
             />
             {errors?.name && (
               <p className="text-xs text-red-500 mt-1">
-                {errors?.name?.message}
+                {errors?.name?.message as string}
               </p>
             )}
           </div>
@@ -234,7 +235,7 @@ const AddMenu = () => {
             </ul>
             {errors?.type && (
               <p className="text-xs text-red-500 mt-1">
-                {errors?.type?.message}
+                {errors?.type?.message as string}
               </p>
             )}
           </div>
@@ -249,7 +250,6 @@ const AddMenu = () => {
             <input
               type="number"
               id="price"
-              name="price"
               {...register('price', {
                 required: 'Price is required',
               })}
@@ -258,7 +258,7 @@ const AddMenu = () => {
             />
             {errors?.price && (
               <p className="text-xs text-red-500 mt-1">
-                {errors?.price?.message}
+                {errors?.price?.message as string}
               </p>
             )}
           </div>
@@ -269,11 +269,10 @@ const AddMenu = () => {
               <input
                 type="file"
                 id="image"
-                name="image"
                 accept="image/*"
                 {...register('image')}
                 className="hidden"
-                onChange={(e) => {
+                onChange={(e:any) => {
                   const file = e.target.files[0];
                   if (file) setImage(file);
                 }}
@@ -290,7 +289,7 @@ const AddMenu = () => {
                   <Image
                     src={spinner}
                     width={50}
-                    heigh={50}
+                    height={50}
                     alt="uploading"
                     className="w-12 h-12 object-contain"
                   />
@@ -308,7 +307,7 @@ const AddMenu = () => {
               </div>
               {errors?.image && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.image?.message}
+                  {errors?.image?.message as string}
                 </p>
               )}
             </div>

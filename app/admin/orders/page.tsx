@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { TablePaginationConfig } from 'antd';
+import { FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
 import { fetchUserOrders as fetchOrders } from '@/utils/api';
 import { Table } from 'antd';
 import refresh from '@/assets/icons/ic_baseline-refresh.svg';
@@ -13,7 +15,6 @@ import listIcon from '@/assets/icons/listIcon.svg';
 import fullscreen from '@/assets/icons/ic_baseline-fullscreen.svg';
 import pizzaIcon from '@/assets/icons/pizzaIcon.svg';
 import viewIcon from '@/assets/icons/view.svg';
-import { useState } from 'react';
 import OrderDetailPopup from '@/components/ui/OrderDetailPopup';
 import { format } from 'date-fns';
 import spinner from '@/assets/icons/spinner.svg';
@@ -21,23 +22,32 @@ import { orderStatusUpdateApi } from '@/utils/api';
 import { toast } from 'react-toastify';
 import checkMark from '@/assets/icons/checkMark.svg';
 
+type Order = {
+  id: string;
+}
+
 const Orders = () => {
   const [data, setData] = useState([]);
   const [isOrderDetailPopupOpen, setIsOrderDetailPopupOpen] = useState(false);
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [statusChangingRow, setStatusChangingRow] = useState(null);
+  const [statusChangingRow, setStatusChangingRow] = useState<string | null>(null);
 
-  const handleViewToppings = (record) => {
+  const handleViewToppings = (record:any) => {
     setIsOrderDetailPopupOpen(true);
     setOrder(record);
   };
 
-  const onChange = (pagination, filters, sorter, extra) => {
+  const onChange = (
+  pagination: TablePaginationConfig,
+  filters: Record<string, FilterValue | null>,
+  sorter: SorterResult<any> | SorterResult<any>[],
+  extra: TableCurrentDataSource<any>
+) => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
-  const handleStatusChange = async (row, newStatus) => {
+  const handleStatusChange = async (row: Order, newStatus: string) => {
     setStatusChangingRow(row.id);
     try {
       const res = await orderStatusUpdateApi(row.id, newStatus);
@@ -50,7 +60,7 @@ const Orders = () => {
 
       const ress = await fetchOrders();
 
-      const data = ress.orders?.map((order) => {
+      const data = ress.orders?.map((order:any) => {
         const formattedDate = format(new Date(order?.createdAt), 'M/d/yy');
         const formattedTime = format(new Date(order?.createdAt), 'h:mm a');
         return {
@@ -82,7 +92,7 @@ const Orders = () => {
       title: 'Name',
       dataIndex: 'name',
       width: '200px',
-      render: (text) => (
+      render: (text:string) => (
         <div className="flex items-center gap-2 w-[150px]"> {/* Ensure the name field doesn’t expand */}
           <Image src={pizzaIcon} width={20} height={20} alt="name icon" />
           {text}
@@ -93,7 +103,7 @@ const Orders = () => {
       title: 'Topping',
       dataIndex: 'topping',
       width: '200px',
-      render: (record, row) => (
+      render: (record: any, row:any) => (
         <div className="flex items-center gap-2">
           <button onClick={() => handleViewToppings(row)}>
             <Image src={viewIcon} width={20} height={20} alt="view icon" />
@@ -116,7 +126,7 @@ const Orders = () => {
       title: 'Created at',
       dataIndex: 'createdAt',
       width: '150px',
-      render: (text, record) => (
+      render: (text:string, record:any) => (
         <div className="flex items-center gap-2">
           <p>{record.createdTime}</p>
           <p className="text-textPrimary/50">{record.createdDate}</p>
@@ -127,7 +137,7 @@ const Orders = () => {
       title: 'Status',
       dataIndex: 'status',
       width: '100px',
-      render: (record, row) =>
+      render: (record:any, row:{id:string, status: string}) =>
         <div className="flex justify-center items-center w-[100px]">
           {statusChangingRow === row.id ? (
             <div className="flex justify-center items-center w-8 h-8">
@@ -172,7 +182,7 @@ const Orders = () => {
           return;
         }
 
-        const data = res.orders?.map((order) => {
+        const data = res.orders?.map((order:any) => {
           const formattedDate = format(new Date(order?.createdAt), 'M/d/yy');
           const formattedTime = format(new Date(order?.createdAt), 'h:mm a');
           return {
@@ -297,8 +307,8 @@ const Orders = () => {
             </div>
           </div>
           <Table
-            size="medium"
-            keyExtractor={(item) => item._id}
+            size="small"
+            rowKey={(item: any) => item._id}
             columns={columns}
             dataSource={data}
             onChange={onChange}

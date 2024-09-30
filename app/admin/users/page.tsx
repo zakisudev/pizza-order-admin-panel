@@ -20,6 +20,8 @@ import trash from '@/assets/icons/trash.svg';
 import DeleteModal from '@/components/ui/DeleteModal';
 import UserStatus from '@/components/ui/UserStatus';
 import AddUserModal from '@/components/ui/AddUserModal';
+import { TablePaginationConfig } from 'antd';
+import { FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
 
 const Users = () => {
   const router = useRouter();
@@ -31,7 +33,7 @@ const Users = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addUserModal, setAddUserModal] = useState(false);
 
-  const handleDeleteModal = (row) => {
+  const handleDeleteModal = (row:any) => {
     setUser(row);
     setDeleteModalOpen(true);
   };
@@ -40,7 +42,7 @@ const Users = () => {
     setAddUserModal(true);
   };
 
-  const handleDeleteUser = async (user) => {
+  const handleDeleteUser = async (user:any) => {
     setDeleting(true);
     try {
       const res = await deleteUserApi(user);
@@ -80,7 +82,7 @@ const Users = () => {
       title: 'Actions',
       dataIndex: 'actions',
       width: '50',
-      render: (_, row) => (
+      render: (row:any) => (
         <div className="flex items-center">
           <UserStatus user={row} />
           <button
@@ -101,7 +103,12 @@ const Users = () => {
     },
   ];
 
-  const onChange = (pagination, filters, sorter, extra) => {
+  const onChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<any> | SorterResult<any>[],
+    extra: TableCurrentDataSource<any>
+  ) => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
@@ -117,7 +124,7 @@ const Users = () => {
         }
 
         setData(
-          res?.users?.map((user) => ({
+          res?.users?.map((user:any) => ({
             ...user,
             key: user._id,
           }))
@@ -132,32 +139,11 @@ const Users = () => {
     fetchUsersApi();
   }, [deleteModalOpen]);
 
-  useEffect(() => {
-    if (router.query?.refresh) {
-      const fetchUsersApi = async () => {
-        try {
-          const res = await fetchUsers();
-
-          setData(
-            res?.users?.map((user) => ({
-              ...user,
-              key: user._id,
-            }))
-          );
-        } catch (error) {
-          console.log(error);
-          toast.error(error);
-        }
-      };
-      fetchUsersApi();
-    }
-  }, [router.query]);
-
   return (
     <>
       {isOrderDetailPopupOpen && (
         <OrderDetailPopup
-          order={order}
+          order={user}
           setIsOrderDetailPopupOpen={setIsOrderDetailPopupOpen}
         />
       )}
@@ -270,10 +256,10 @@ const Users = () => {
             </div>
           </div>
           <Table
-            keyExtractor={(item) => item._id}
+            rowKey={(item: any) => item._id}
             columns={columns}
             dataSource={data}
-            size="medium"
+            size="small"
             onChange={onChange}
             className="table-header"
           />

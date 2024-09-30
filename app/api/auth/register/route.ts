@@ -48,8 +48,8 @@ export const POST = async (req: NextRequest) => {
     }
 
     return NextResponse.json({ message: 'User registered successfully' });
-  } catch (error) {
-    console.error(e);
+  } catch (error:any) {
+    console.error(error);
     return new NextResponse('Error fetching data', { status: 500 });
   }
 };

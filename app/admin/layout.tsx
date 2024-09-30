@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/reducers/auth';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children }:any) => {
   const dispatch= useDispatch();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
@@ -76,7 +76,7 @@ const AdminLayout = ({ children }) => {
     }
   };
 
-  const handleLink = (location) => {
+  const handleLink = (location:any) => {
     setUrl(location.href);
     setLabel(location.label)
     return router.push(location.href);
@@ -112,7 +112,7 @@ const AdminLayout = ({ children }) => {
                 {isOpen && (
                   <p className={`w-full flex`}>{item.label}</p>
                 )}
-                {!isOpen && <ReactTooltip id={item.label} place="right" type="dark" effect="float" />}
+                {!isOpen && <ReactTooltip id={item.label} place="right" />}
               </div>
             </li>
           ))}

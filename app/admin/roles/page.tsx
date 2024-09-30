@@ -22,6 +22,9 @@ import DeleteModal from '@/components/ui/DeleteModal';
 import UserStatus from '@/components/ui/UserStatus';
 import AddRoleModal from '@/components/ui/AddRoleModal';
 import {format} from 'date-fns';
+import { TablePaginationConfig } from 'antd';
+import { FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
+
 
 const Roles = () => {
   const router = useRouter();
@@ -33,12 +36,12 @@ const Roles = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addRoleModal, setAddRoleModal] = useState(false);
 
-  const handleViewModal = (row) => {
+  const handleViewModal = (row:any) => {
     setRole(row);
     setIsRoleDetailPopupOpen(true);
   }
 
-  const handleDeleteModal = (row) => {
+  const handleDeleteModal = (row:any) => {
     setRole(row);
     setDeleteModalOpen(true);
   };
@@ -47,7 +50,7 @@ const Roles = () => {
     setAddRoleModal(true);
   };
 
-  const handleDeleteRole = async (role) => {
+  const handleDeleteRole = async (role:any) => {
     setDeleting(true);
     try {
       const res = await deleteRoleApi(role);
@@ -77,7 +80,7 @@ const Roles = () => {
       title: 'Created at',
       dataIndex: 'createdAt',
       width: '70',
-      render: (text, record) => (
+      render: (text:string, record:any) => (
         <div className="flex items-center gap-2">
           <p>{record.createdAt && format(new Date(record?.createdAt), 'M/d/yy')}</p>
         </div>
@@ -87,7 +90,7 @@ const Roles = () => {
       title: 'Permissions',
       dataIndex: 'permissions',
       width: '70',
-      render: (_, row) => (
+      render: (record:any, row:any) => (
         <div className="flex items-center">
           <button
             onClick={() => handleViewModal(row)}
@@ -108,7 +111,7 @@ const Roles = () => {
       title: 'Actions',
       dataIndex: 'actions',
       width: '70',
-      render: (_, row) => (
+      render: (row:any) => (
         <div className="flex items-center">
           <UserStatus user={row} />
           <button
@@ -129,7 +132,12 @@ const Roles = () => {
     },
   ];
 
-  const onChange = (pagination, filters, sorter, extra) => {
+  const onChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<any> | SorterResult<any>[],
+    extra: TableCurrentDataSource<any>
+  ) => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
@@ -140,7 +148,7 @@ const Roles = () => {
         const res = await fetchRoles();
 
         setData(
-          res?.roles?.map((role) => ({
+          res?.roles?.map((role:any) => ({
             ...role,
             key: role._id,
           }))
@@ -154,32 +162,6 @@ const Roles = () => {
 
     fetchRolesApi();
   }, [deleteModalOpen]);
-
-  useEffect(() => {
-    if (router.query?.refresh) {
-      const fetchRolesApi = async () => {
-        try {
-          const res = await fetchRoles();
-
-          if (!res || res.error) {
-            toast.error(res.error);
-            return;
-          }
-
-          setData(
-            res?.roles?.map((role) => ({
-              ...role,
-              key: role._id,
-            }))
-          );
-        } catch (error) {
-          console.log(error);
-          toast.error(error);
-        }
-      };
-      fetchRolesApi();
-    }
-  }, [router.query]);
 
   return (
     <>
@@ -298,10 +280,10 @@ const Roles = () => {
             </div>
           </div>
           <Table
-            keyExtractor={(item) => item._id}
+            rowKey={(item: any) => item._id}
             columns={columns}
             dataSource={data}
-            size="medium"
+            size="small"
             onChange={onChange}
             className="table-header"
           />

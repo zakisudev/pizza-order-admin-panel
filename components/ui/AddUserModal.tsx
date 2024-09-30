@@ -145,7 +145,7 @@ const AddUserModal = ({ setAddUserModal }) => {
               />
               {errors?.password && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.password?.message}
+                  {errors?.password?.message as string}
                 </p>
               )}
             </div>

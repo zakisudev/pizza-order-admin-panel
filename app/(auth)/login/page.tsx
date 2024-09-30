@@ -27,7 +27,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleLogin = async (data) => {
+  const handleLogin = async (data:any) => {
     setIsLoading(true);
     try {
       const res = await handleLoginApi(data);
@@ -104,7 +104,7 @@ const LoginPage = () => {
               />
               {errors?.email && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.email?.message}
+                  {errors?.email.message as string}
                 </p>
               )}
             </div>
@@ -118,7 +118,6 @@ const LoginPage = () => {
               <input
                 type="password"
                 id="password"
-                name="password"
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
@@ -135,7 +134,7 @@ const LoginPage = () => {
               />
               {errors?.password && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.password?.message}
+                  {errors?.password?.message as string}
                 </p>
               )}
             </div>
@@ -145,7 +144,6 @@ const LoginPage = () => {
                 <input
                   type="checkbox"
                   id="remember"
-                  name="remember"
                   {...register('remember')}
                   className="rounded-md h-[18px] w-[18px]"
                 />
@@ -155,7 +153,7 @@ const LoginPage = () => {
               </div>
               {errors?.terms && (
                 <p className="pl-4 mt-2 text-xs text-red-500">
-                  {errors?.terms?.message}
+                  {errors?.terms?.message as string}
                 </p>
               )}
             </div>
