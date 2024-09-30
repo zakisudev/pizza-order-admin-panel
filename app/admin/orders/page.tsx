@@ -19,12 +19,10 @@ import { format } from 'date-fns';
 import spinner from '@/assets/icons/spinner.svg';
 import { orderStatusUpdateApi } from '@/utils/api';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
 import checkMark from '@/assets/icons/checkMark.svg';
 
 const Orders = () => {
   const [data, setData] = useState([]);
-  const router = useRouter();
   const [isOrderDetailPopupOpen, setIsOrderDetailPopupOpen] = useState(false);
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
