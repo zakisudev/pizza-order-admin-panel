@@ -47,8 +47,8 @@ export const POST = async (req: NextRequest) => {
     }
 
     return NextResponse.json({ message: 'Pizza added successfully' }, {status: 201});
-  } catch (error) {
-    console.error(e);
+  } catch (error:any) {
+    console.error(error);
     return new NextResponse('Error fetching data', { status: 500 });
   }
 };

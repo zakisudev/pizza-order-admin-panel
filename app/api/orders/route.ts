@@ -1,27 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import clientPromise from '@/lib/mongodb';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
 import { orderStatuses } from '@/utils/constants';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const cookieHeader = request.cookies;
 
-    const token = cookieHeader.get('token');
+    const token = cookieHeader.get('token') || { value: null };
 
-    if (!token.value) {
+    if (!token?.value) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const decoded = await jwt.verify(token.value, process.env.JWT_SECRET);
+    const decoded = (await jwt.verify(
+      token?.value,
+      process.env.JWT_SECRET || ''
+    )) || { userId: null };
 
     const client = await clientPromise;
     const db = client.db('pizza-order');
 
     const user = await db
       .collection('users')
-      .findOne({ _id: new ObjectId(decoded?.userId) });
+      .findOne({ _id: new ObjectId((decoded as JwtPayload)?.userId) });
 
     if (!user) {
       return new NextResponse('Unauthorized', { status: 401 });
@@ -33,7 +36,7 @@ export async function GET(request: Request) {
       ? await db.collection('orders').find({}).toArray()
       : await db
           .collection('orders')
-          .find({ userId: new ObjectId(decoded?.userId) })
+          .find({ userId: new ObjectId((decoded as JwtPayload)?.userId) })
           .toArray();
 
     if (!orders || !orders.length) {
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
     }
 
     if (user?.isAuth) {
-      const sortedOrders = orders?.sort((a, b) => {
+      const sortedOrders = orders?.sort((a: any, b: any) => {
         return (
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
@@ -49,7 +52,7 @@ export async function GET(request: Request) {
 
       return NextResponse.json(
         {
-          orders: sortedOrders?.map((order) => {
+          orders: sortedOrders?.map((order: any) => {
             return {
               ...order,
               _id: order._id,
@@ -68,7 +71,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const sortedOrders = orders?.sort((a, b) => {
+    const sortedOrders = orders?.sort((a: any, b: any) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
 
@@ -79,24 +82,27 @@ export async function GET(request: Request) {
   }
 }
 
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   try {
     const cookieHeader = request.cookies;
 
-    const token = cookieHeader.get('token');
+    const token = cookieHeader.get('token') || { value: null };
 
-    if (!token.value) {
+    if (!token?.value) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const decoded = await jwt.verify(token.value, process.env.JWT_SECRET);
+    const decoded = (await jwt.verify(
+      token?.value,
+      process.env.JWT_SECRET || ''
+    )) || { userId: null };
 
     const client = await clientPromise;
     const db = client.db('pizza-order');
 
     const user = await db
       .collection('users')
-      .findOne({ _id: new ObjectId(decoded?.userId) });
+      .findOne({ _id: new ObjectId((decoded as JwtPayload)?.userId) });
 
     if (!user) {
       return new NextResponse('Ordering User not found', { status: 404 });
@@ -120,7 +126,10 @@ export const POST = async (request: Request) => {
       return new NextResponse('Error creating order', { status: 500 });
     }
 
-    return NextResponse.json({message: 'Order created successfully'}, { status: 201 });
+    return NextResponse.json(
+      { message: 'Order created successfully' },
+      { status: 201 }
+    );
   } catch (e) {
     console.error(e);
     return new NextResponse('Error creating order', { status: 500 });

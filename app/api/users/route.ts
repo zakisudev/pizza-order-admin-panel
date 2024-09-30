@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import clientPromise from '@/lib/mongodb';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
 import { hashPassword } from '@/utils/hashPassword';
 import { resourceStatuses } from '@/utils/constants';
@@ -9,20 +9,23 @@ export const GET = async (req: NextRequest) => {
   try {
     const cookieHeader = req.cookies;
 
-    const token = cookieHeader.get('token');
+    const token = cookieHeader.get('token') || { value: null };
 
-    if (!token.value) {
-      return new NextResponse('Unauthorized, invalid token', { status: 401 });
+    if (!token?.value) {
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const decoded = await jwt.verify(token.value, process.env.JWT_SECRET);
+    const decoded = (await jwt.verify(
+      token?.value,
+      process.env.JWT_SECRET || ''
+    )) || { userId: null };
 
     const client = await clientPromise;
     const db = client.db('pizza-order');
 
     const user = await db
       .collection('users')
-      .findOne({ _id: new ObjectId(decoded?.userId) });
+      .findOne({ _id: new ObjectId((decoded as JwtPayload)?.userId) });
 
     if (!user || !user.isAuth) {
       return new NextResponse('Unauthorized access', { status: 401 });
@@ -76,7 +79,9 @@ export const POST = async (req: NextRequest) => {
     const client = await clientPromise;
     const db = client.db('pizza-order');
 
-    const existingRole = await db.collection('roles').findOne({_id: new ObjectId(role)})
+    const existingRole = await db
+      .collection('roles')
+      .findOne({ _id: new ObjectId(role) });
 
     if (!existingRole) {
       return new NextResponse("Role doesn't exists", {
@@ -92,7 +97,7 @@ export const POST = async (req: NextRequest) => {
       role: existingRole.name,
       password: await hashPassword(password),
       status: resourceStatuses.active,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     const existingUser = await db
@@ -111,7 +116,10 @@ export const POST = async (req: NextRequest) => {
       return new NextResponse('An error occurred', { status: 500 });
     }
 
-    return NextResponse.json({ message: 'User registered successfully' }, {status: 201});
+    return NextResponse.json(
+      { message: 'User registered successfully' },
+      { status: 201 }
+    );
   } catch (error) {
     console.error(error);
     return new NextResponse('Internal server error', { status: 500 });

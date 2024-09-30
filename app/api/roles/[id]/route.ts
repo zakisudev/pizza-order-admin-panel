@@ -2,16 +2,12 @@ import { NextResponse, NextRequest } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
-export const PUT = async (
-  req: NextRequest,
-  { params }
-) => {
+export const PUT = async (req: NextRequest, { params }: any) => {
   try {
     const client = await clientPromise;
     const db = client.db('pizza-order');
     const { id } = params;
-    const { name, permissions } =
-      await req.json();
+    const { name, permissions } = await req.json();
 
     const existingRole = await db
       .collection('roles')
@@ -35,7 +31,7 @@ export const PUT = async (
     );
   } catch (error) {
     console.log(error);
-    return new NextResponse(
+    return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }
     );
@@ -73,7 +69,7 @@ export const DELETE = async (
     );
   } catch (error) {
     console.log(error);
-    return new NextResponse(
+    return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }
     );

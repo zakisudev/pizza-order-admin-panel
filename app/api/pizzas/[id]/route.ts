@@ -56,9 +56,9 @@ export const PUT = async (
       .collection('pizzas')
       .updateOne({ _id: new ObjectId(id) }, { $set: { toppings: toppings } });
 
-    return NextResponse.json(result, { message: 'Pizza updated successfully' });
-  } catch (error) {
-    console.error(e);
+    return NextResponse.json({ result, message: 'Pizza updated successfully' });
+  } catch (error:any) {
+    console.error(error);
     return new NextResponse('Error fetching data', { status: 500 });
   }
 };
