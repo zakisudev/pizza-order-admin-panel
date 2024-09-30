@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {fetchRoles}  from '@/utils/api';
 import {adminPermissions} from '@/utils/constants'
+import { RootState } from '@/redux/rootReducer';
+import { toast } from 'react-toastify';
 
-const withAuth = (WrappedComponent) => {
-  const ComponentWithAuth = (props) => {
+const withAuth = (WrappedComponent: any) => {
+  const ComponentWithAuth = (props:any) => {
     const router = useRouter();
     const [permissions, setPermissions] = useState([])
-    const {user} = useSelector((state) => state.auth);
+    const {user} = useSelector((state:any) => state.auth);
 
     useEffect(()=> {
       const fetchRolesApi = async () => {
@@ -16,12 +18,12 @@ const withAuth = (WrappedComponent) => {
           const res = await fetchRoles();
 
           if (!res || res?.error) {
-            toast.error()
+            toast.error(res?.error)
           }
 
           setPermissions(res?.roles[0]?.permissions)
 
-        } catch (error) {
+        } catch (error:any) {
           console.log(error);
         }
       }
@@ -30,7 +32,7 @@ const withAuth = (WrappedComponent) => {
     },[])
 
     useEffect(() => {
-      const hasAllAdminPermissions = Object.values(adminPermissions).every(permission => user?.permissions?.includes(permission));
+      const hasAllAdminPermissions = Object.values(adminPermissions).every((permission:any) => user?.permissions?.includes(permission));
 
       if (!permissions.length && !hasAllAdminPermissions) {
         router.push('/login');

@@ -11,12 +11,13 @@ import Image from 'next/image';
 import spinner from '@/assets/icons/spinner.svg';
 import {useRouter} from 'next/navigation';
 import {setUser} from '@/redux/actions/auth'
+import { RootState } from '@/redux/rootReducer';
 
 const OrderHistory = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user } = useSelector((state) => state.auth);
-  const { orders } = useSelector((state) => state.orders);
+  const { user } = useSelector((state :any) => state.auth);
+  const { orders } = useSelector((state :any) => state.orders);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const currentPath = '/orders';
@@ -84,7 +85,7 @@ const OrderHistory = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
-          {orders?.map((order) => (
+          {orders?.map((order:any) => (
             <OrderCard key={order._id} order={order} status={order.status} />
           ))}
         </div>

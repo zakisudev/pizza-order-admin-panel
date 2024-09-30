@@ -1,6 +1,6 @@
 import Header from '@/components/ui/Header';
 
-const layout = ({ children }) => {
+const layout = ({ children }:any) => {
   return (
     <div className="relative flex flex-col w-full max-w-hxl min-h-screen mx-auto bg-bodyBg">
       <Header />

@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import close from '@/assets/icons/close.svg';
 
-const AddRoleModal = ({setAddRoleModal}) => {
+const AddRoleModal = ({setAddRoleModal}:any) => {
   const router = useRouter();
-  const [permissions, setPermissions] = useState([]);
+  const [permissions, setPermissions] = useState<any>([]);
   const {
     register,
     handleSubmit,
@@ -16,16 +16,16 @@ const AddRoleModal = ({setAddRoleModal}) => {
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRoleChange = (e) => {
+  const handleRoleChange = (e:any) => {
     const { name, checked } = e.target;
     if (checked) {
       setPermissions([...permissions, name]);
     } else {
-      setPermissions(permissions.filter((permission) => permission !== name));
+      setPermissions(permissions.filter((permission:any) => permission !== name));
     }
   };
 
-  const handleRegister = async (data) => {
+  const handleRegister = async (data:any) => {
     setIsLoading(true);
     try {
       data.permissions = permissions;
@@ -39,7 +39,7 @@ const AddRoleModal = ({setAddRoleModal}) => {
       toast.success(res.message);
       setAddRoleModal(false);
       router.push('/admin/roles?refresh=true');
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
       toast.error('An error occurred');
     } finally {
@@ -83,7 +83,7 @@ const AddRoleModal = ({setAddRoleModal}) => {
               />
               {errors?.name && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.name?.message}
+                  {errors?.name?.message as string}
                 </p>
               )}
             </div>

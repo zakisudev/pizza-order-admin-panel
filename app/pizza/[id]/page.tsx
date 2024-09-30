@@ -27,17 +27,18 @@ import { toast } from 'react-toastify';
 import { clearCart } from '@/redux/reducers/cart';
 import spinner from '@/assets/icons/spinner.svg';
 import OrderConfirmationCard from '@/components/ui/OrderConfirmationCard';
+import { RootState } from '@/redux/rootReducer';
 
-const PizzaDetails = ({ params }) => {
+const PizzaDetails = ({ params }:any) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { user } = useSelector((state) => state.auth);
-  const { pizzas } = useSelector((state) => state.pizzas);
-  const cart = useSelector((state) => state.cart);
+  const { user } = useSelector((state : RootState) => state.auth);
+  const { pizzas } = useSelector((state : RootState) => state.pizzas);
+  const cart = useSelector((state : RootState) => state.cart);
   const currentPath = `/pizza/${params?.id}`;
-  const { pizza, type, toppings, quantity } = useSelector((state) => state.cart);
+  const { pizza, type, toppings, quantity } = useSelector((state : any) => state.cart);
   const [isLoading, setIsLoading] = useState(false);
   const [isOrdering, setIsOrdering] = useState(false)
 
@@ -89,9 +90,9 @@ const PizzaDetails = ({ params }) => {
     dispatch(setType(pizza?.types[1]));
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e:any) => {
     const { name, checked } = e.target;
-    if (checked && !toppings?.find((t) => t === name)) {
+    if (checked && !toppings?.find((t:string) => t === name)) {
       dispatch(addTopping(name));
     } else {
       dispatch(removeTopping(name));
@@ -362,8 +363,8 @@ const PizzaDetails = ({ params }) => {
       <div className="flex flex-col gap-6 py-6 bg-gradient-to-b from-bodyBg/50 to-bodyBg">
         <h2 className="text-black/50 font-medium text-5xl">Related</h2>
         <div className="grid grid-cols-3 gap-12 overflow-x-scroll">
-          {pizzas?.filter(p=> p._id !== pizza._id)?.map((piz) => (
-            <PizzaCard key={piz._id} pizza={piz} order="related" />
+          {pizzas?.filter((p:any)=> p._id !== pizza._id)?.map((piz:any) => (
+            <PizzaCard key={piz._id} pizza={piz} status="related" />
           ))}
         </div>
       </div>

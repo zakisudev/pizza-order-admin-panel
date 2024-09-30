@@ -1,7 +1,7 @@
 import spinner from '@/assets/icons/spinner.svg';
 import Image from 'next/image';
 
-const DeleteModal = ({ resource, setIsDeleteModalOpen, handleDeleteResource, loading }) => {
+const DeleteModal = ({ resource, setIsDeleteModalOpen, handleDeleteResource, loading }:any) => {
 
   return (
     <div className="flex justify-center items-center bg-black/70 absolute z-20 top-0 bottom-0 right-0 left-0 inset-0">
@@ -18,7 +18,7 @@ const DeleteModal = ({ resource, setIsDeleteModalOpen, handleDeleteResource, loa
           <div className="flex justify-center gap-4">
             <button
               className="flex justify-center items-center bg-[#FF0000] text-white px-6 py-2 rounded-md font-bold"
-              onClick={() => handleDeleteResource(resource._id)}
+              onClick={() => handleDeleteResource(resource?._id)}
             >
               {loading ? (
                 <Image src={spinner} width={24} height={2} alt="delete" className="w-6 h-6 object-contain" />

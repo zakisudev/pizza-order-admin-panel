@@ -22,11 +22,10 @@ const Carousel = () => {
         setLoaded(true);
       },
       loop: true,
-      spacing: 15,
     },
     [
       (slider) => {
-        let timeout;
+        let timeout:any;
         let mouseOver = false;
 
         function clearNextTimeout() {

@@ -39,7 +39,7 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json(
       {
-        users: users.map((user) => {
+        users: users.map((user: any) => {
           return {
             _id: user._id,
             fullName: user.fullName,

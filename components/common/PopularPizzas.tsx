@@ -4,7 +4,7 @@ import PizzaCard from '@/components/ui/PizzaCard';
 import { useSelector } from 'react-redux';
 
 const PopularPizzas = () => {
-  const {pizzas} = useSelector((state) => state.pizzas);
+  const {pizzas} = useSelector((state:any) => state.pizzas);
 
   return (
     <div
@@ -14,7 +14,7 @@ const PopularPizzas = () => {
       <h2 className="text-black/50 font-medium text-responsiveTag">Popular Pizzas</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px] sm:gap-12">
         {pizzas.length > 0 &&
-          pizzas?.map((piz) => <PizzaCard key={piz._id} pizza={piz} />)}
+          pizzas?.map((piz:any) => <PizzaCard key={piz._id} pizza={piz} status="" />)}
       </div>
     </div>
   );

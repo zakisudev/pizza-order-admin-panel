@@ -3,7 +3,7 @@
 import {useEffect} from 'react';
 import axios from 'axios';
 
-const OrderDetails = ({ params }) => {
+const OrderDetails = ({ params }:any) => {
   const { id } = params;
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import close from '@/assets/icons/close.svg';
 import {fetchRoles} from '@/utils/api';
 
-const AddUserModal = ({ setAddUserModal }) => {
+const AddUserModal = ({ setAddUserModal }:any) => {
   const router = useRouter();
   const [roles, setRoles] = useState([])
   const {
@@ -17,7 +17,7 @@ const AddUserModal = ({ setAddUserModal }) => {
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRegister = async (data) => {
+  const handleRegister = async (data:any) => {
     setIsLoading(true);
     try {
       const res = await handleAdminUserRegisterApi(data);
@@ -48,8 +48,8 @@ const AddUserModal = ({ setAddUserModal }) => {
           return;
         }
 
-        setRoles(res.roles.map((r)=> r))
-      } catch (error) {
+        setRoles(res.roles.map((r:any)=> r))
+      } catch (error:any) {
         console.error(error);
         toast.error('An error occurred');
       }
@@ -94,7 +94,7 @@ const AddUserModal = ({ setAddUserModal }) => {
               />
               {errors?.fullName && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.fullName?.message}
+                  {errors?.fullName?.message as string}
                 </p>
               )}
             </div>
@@ -114,7 +114,7 @@ const AddUserModal = ({ setAddUserModal }) => {
               />
               {errors?.email && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.email?.message}
+                  {errors?.email?.message as string}
                 </p>
               )}
             </div>
@@ -128,7 +128,6 @@ const AddUserModal = ({ setAddUserModal }) => {
               <input
                 type="password"
                 id="password"
-                name="password"
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
@@ -159,14 +158,13 @@ const AddUserModal = ({ setAddUserModal }) => {
               <input
                 type="text"
                 id="location"
-                name="location"
                 {...register('location', { required: 'Location is required' })}
                 placeholder="Enter your location"
                 className="text-lg border border-gray-300 rounded-md px-3 py-2 h-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors?.location && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.location?.message}
+                  {errors?.location?.message as string}
                 </p>
               )}
             </div>
@@ -180,7 +178,6 @@ const AddUserModal = ({ setAddUserModal }) => {
               <input
                 type="tel"
                 id="phoneNumber"
-                name="phoneNumber"
                 {...register('phoneNumber', {
                   required: 'Phone number is required',
                 })}
@@ -189,7 +186,7 @@ const AddUserModal = ({ setAddUserModal }) => {
               />
               {errors?.phoneNumber && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.phoneNumber?.message}
+                  {errors?.phoneNumber?.message as string}
                 </p>
               )}
             </div>
@@ -201,13 +198,13 @@ const AddUserModal = ({ setAddUserModal }) => {
                   className="border bg-white rounded-sm px-7 h-12 w-[231px]"
                 >
                   <option value="">Select Role</option>
-                  {roles.length > 0 && roles?.map((role, idx)=> (
+                  {roles.length > 0 && roles?.map((role:any, idx:number)=> (
                     <option key={idx} value={role._id}>{role.name}</option>
                   ))}
                 </select>
                 {errors?.phoneNumber && (
                   <p className="text-xs text-red-500 mt-1">
-                    {errors?.role?.message}
+                    {errors?.role?.message as string}
                   </p>
                 )}
               </div>
