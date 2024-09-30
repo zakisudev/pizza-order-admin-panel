@@ -12,6 +12,7 @@ import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/redux/reducers/auth';
 import spinner from '@/assets/icons/spinner.svg';
+import { RootState } from '@/redux/rootReducer';
 
 const LoginPage = () => {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const LoginPage = () => {
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/';
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const {
     register,
     handleSubmit,
