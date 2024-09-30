@@ -10,7 +10,7 @@ export const handleRegisterApi = async (userData: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: error?.response };
   }
 };
@@ -24,7 +24,7 @@ export const handleAdminUserRegisterApi = async (user: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -38,7 +38,7 @@ export const handleLoginApi = async (userData: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: error?.response };
   }
 };
@@ -52,7 +52,7 @@ export const handleLogoutApi = async () => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -66,7 +66,7 @@ export const fetchPizzas = async () => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -80,7 +80,7 @@ export const fetchPizza = async (id: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -94,7 +94,7 @@ export const fetchUserOrders = async () => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     if (error.status === 401) {
       return { error: 'Unauthorized' };
     } else if (error.status === 404) {
@@ -114,7 +114,7 @@ export const handleUserUpdateApi = async (id: any, data: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -128,7 +128,7 @@ export const handleAddPizzaApi = async (pizza: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -142,7 +142,7 @@ export const orderApi = async (order: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -156,7 +156,7 @@ export const orderStatusUpdateApi = async (id: any, status: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -170,10 +170,10 @@ export const fetchUsers = async () => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
-}
+};
 
 export const deleteUserApi = async (id: any) => {
   try {
@@ -184,7 +184,7 @@ export const deleteUserApi = async (id: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -198,7 +198,7 @@ export const fetchRoles = async () => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -212,12 +212,12 @@ export const handleAddRoleApi = async (data: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
 
-export const updateRoleStatus = async (status: any) => {
+export const updateRoleStatus = async (id: any, status: any) => {
   try {
     const res = await axios.put(`${BASE_URL}/roles/${id}`, { status });
 
@@ -226,7 +226,7 @@ export const updateRoleStatus = async (status: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };
@@ -240,7 +240,7 @@ export const deleteRoleApi = async (id: any) => {
     }
 
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return { error: 'An error occurred' };
   }
 };

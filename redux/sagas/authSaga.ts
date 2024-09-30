@@ -31,7 +31,7 @@ function* login(action: any): Generator<Effect, void, any> {
   }
 }
 
-function* logout() {
+function* logout(): any {
   try {
     const data = yield call(handleLogoutApi);
     if (data.error) {

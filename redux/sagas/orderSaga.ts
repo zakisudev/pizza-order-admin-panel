@@ -3,7 +3,7 @@ import { fetchUserOrders } from '@/utils/api';
 import orderActions from '@/redux/types/order';
 import { setOrders } from '@/redux/reducers/order';
 
-function* fetchOrdersSaga() {
+function* fetchOrdersSaga(): any {
   try {
     const orders = yield call(fetchUserOrders);
 

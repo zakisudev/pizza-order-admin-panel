@@ -3,7 +3,7 @@ import { setPizza } from '@/redux/actions/cart';
 import cartActionTypes from '@/redux/types/cart';
 import { fetchPizza } from '@/utils/api';
 
-function* handleSetPizza(action: any) {
+function* handleSetPizza(action: any): any {
   try {
     const pizza = yield call(fetchPizza, action.payload);
     console.log(pizza);

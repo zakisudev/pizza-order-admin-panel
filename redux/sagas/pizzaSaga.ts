@@ -4,7 +4,7 @@ import pizzaActions from '@/redux/types/pizza';
 import { setPizzas } from '@/redux/reducers/pizza';
 import {setPizza, setType} from '@/redux/reducers/cart'
 
-function* fetchPizzasSaga() {
+function* fetchPizzasSaga(): any {
   try {
     const pizzas = yield call(fetchPizzas);
 
@@ -14,7 +14,7 @@ function* fetchPizzasSaga() {
   }
 }
 
-function* fetchPizzaSaga(action: any) {
+function* fetchPizzaSaga(action: any): any {
   try {
     const pizza = yield call(fetchPizza, action.payload);
 
