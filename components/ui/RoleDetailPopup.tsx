@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import close from '@/assets/icons/close.svg';
 
-const RoleDetailPopup = ({ resource, setIsRoleDetailPopupOpen }) => {
+const RoleDetailPopup = ({ resource, setIsRoleDetailPopupOpen }:any) => {
   const router = useRouter();
   const [permissions, setPermissions] = useState(resource?.permissions || []);
   const {
@@ -16,16 +16,16 @@ const RoleDetailPopup = ({ resource, setIsRoleDetailPopupOpen }) => {
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRoleChange = (e) => {
+  const handleRoleChange = (e:any) => {
     const { name, checked } = e.target;
     if (checked) {
       setPermissions([...permissions, name]);
     } else {
-      setPermissions(permissions.filter((permission) => permission !== name));
+      setPermissions(permissions.filter((permission:any) => permission !== name));
     }
   };
 
-  const handleUpdate = async (data) => {
+  const handleUpdate = async (data:any) => {
     setIsLoading(true);
     try {
       const res = await handleAddRoleApi(data);
@@ -36,7 +36,7 @@ const RoleDetailPopup = ({ resource, setIsRoleDetailPopupOpen }) => {
       }
 
       toast.success(res.message);
-      setAddRoleModal(false);
+      setIsRoleDetailPopupOpen(false);
       router.push('/admin/roles?refresh=true');
     } catch (error) {
       console.error(error);
@@ -83,7 +83,7 @@ const RoleDetailPopup = ({ resource, setIsRoleDetailPopupOpen }) => {
               />
               {errors?.name && (
                 <p className="text-xs text-red-500 mt-1">
-                  {errors?.name?.message}
+                  {errors?.name?.message as string}
                 </p>
               )}
             </div>

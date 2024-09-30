@@ -17,7 +17,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state:any) => state.auth);
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const handleLogout = async () => {
@@ -42,7 +42,7 @@ const Header = () => {
     }
   };
 
-  const handleClick = (text)=> {
+  const handleClick = (text:any)=> {
     setMobileMenu(false);
     router.push(text)
   }

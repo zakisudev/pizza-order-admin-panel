@@ -6,7 +6,7 @@ import reviewImage from '@/assets/images/Review.png';
 import spinner from '@/assets/icons/spinner.svg';
 import pizzaPlate from '@/assets/images/PizzaPlate.png';
 
-const PizzaCard = ({ pizza, status, type =""}) => {
+const PizzaCard = ({ pizza, status, type =""}:any) => {
   if (!pizza) {
     return (
       <div className="flex justify-center items-center w-12 h-12">

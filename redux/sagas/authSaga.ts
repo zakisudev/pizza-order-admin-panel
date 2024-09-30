@@ -1,9 +1,13 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import { handleRegisterApi, handleLoginApi, handleLogoutApi } from '@/utils/api';
+import { call, put, takeLatest, Effect } from 'redux-saga/effects';
+import {
+  handleRegisterApi,
+  handleLoginApi,
+  handleLogoutApi,
+} from '@/utils/api';
 import authTypes from '@/redux/types/auth';
 import { setUser, clearUser } from '@/redux/actions/auth';
 
-function* register(action) {
+function* register(action: any): Generator<Effect, void, any> {
   try {
     const data = yield call(handleRegisterApi, action.payload);
     if (data.error) {
@@ -15,7 +19,7 @@ function* register(action) {
   }
 }
 
-function* login(action) {
+function* login(action: any): Generator<Effect, void, any> {
   try {
     const data = yield call(handleLoginApi, action.payload);
     if (data.error) {

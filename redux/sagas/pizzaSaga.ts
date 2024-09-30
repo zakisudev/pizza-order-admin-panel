@@ -14,7 +14,7 @@ function* fetchPizzasSaga() {
   }
 }
 
-function* fetchPizzaSaga(action) {
+function* fetchPizzaSaga(action: any) {
   try {
     const pizza = yield call(fetchPizza, action.payload);
 

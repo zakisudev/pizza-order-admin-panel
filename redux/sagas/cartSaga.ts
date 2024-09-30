@@ -3,10 +3,10 @@ import { setPizza } from '@/redux/actions/cart';
 import cartActionTypes from '@/redux/types/cart';
 import { fetchPizza } from '@/utils/api';
 
-function* handleSetPizza(action) {
+function* handleSetPizza(action: any) {
   try {
     const pizza = yield call(fetchPizza, action.payload);
-    console.log(pizza)
+    console.log(pizza);
     yield put(setPizza(pizza));
   } catch (error) {
     console.error('Failed to fetch pizza details:', error);

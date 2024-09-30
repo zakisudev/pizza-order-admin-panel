@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import close from '@/assets/icons/close.svg';
 
-const OrderDetailPopup = ({ order, setIsOrderDetailPopupOpen }) => {
+const OrderDetailPopup = ({ order, setIsOrderDetailPopupOpen }:any) => {
   return (
     <div className="flex justify-center items-center bg-black/70 absolute z-50 top-0 bottom-0 right-0 left-0 inset-0">
       <div className="w-[457px] h-[283px] bg-white rounded-xl p-[10px] relative">
@@ -27,7 +27,7 @@ const OrderDetailPopup = ({ order, setIsOrderDetailPopupOpen }) => {
             <div className="flex gap-6">
               <div className="text-textPrimary/50">Toppings: </div>
               <div className="flex flex-wrap gap-4">
-                {order?.topping?.map((top) => {
+                {order?.topping?.map((top:any) => {
                   if (top === 'mozzarella') {
                     return (
                       <div

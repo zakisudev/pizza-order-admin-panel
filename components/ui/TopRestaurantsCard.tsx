@@ -29,7 +29,7 @@ const TopRestaurantsCard = () => {
           src={orderNumber}
           width={200}
           height={200}
-          wuality={100}
+          quality={100}
           alt="orders"
           className="object-contain w-full h-full"
         />

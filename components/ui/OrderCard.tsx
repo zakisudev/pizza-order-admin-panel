@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import pizzaPlate from '@/assets/images/PizzaPlate.png';
 
-const PizzaCard = ({ order, status }) => {
+const PizzaCard = ({ order, status }:any) => {
   return (
     <div className="flex flex-col gap-2 w-full sm:min-w-[387px] h-75 bg-white rounded-xl p-7">
       <div className="self-center w-[276px] h-[276px] relative">

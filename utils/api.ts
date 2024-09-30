@@ -1,7 +1,7 @@
 import { BASE_URL } from '@/utils/constants';
 import axios from 'axios';
 
-export const handleRegisterApi = async (userData) => {
+export const handleRegisterApi = async (userData: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/auth/register`, userData);
 
@@ -15,7 +15,7 @@ export const handleRegisterApi = async (userData) => {
   }
 };
 
-export const handleAdminUserRegisterApi = async (user) => {
+export const handleAdminUserRegisterApi = async (user: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/users`, user);
 
@@ -27,9 +27,9 @@ export const handleAdminUserRegisterApi = async (user) => {
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};
 
-export const handleLoginApi = async (userData) => {
+export const handleLoginApi = async (userData: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/auth/login`, userData);
 
@@ -39,7 +39,7 @@ export const handleLoginApi = async (userData) => {
 
     return res.data;
   } catch (error) {
-   return { error: error?.response };
+    return { error: error?.response };
   }
 };
 
@@ -71,7 +71,7 @@ export const fetchPizzas = async () => {
   }
 };
 
-export const fetchPizza = async (id) => {
+export const fetchPizza = async (id: any) => {
   try {
     const res = await axios.get(`${BASE_URL}/pizzas/${id}`);
 
@@ -105,7 +105,7 @@ export const fetchUserOrders = async () => {
   }
 };
 
-export const handleUserUpdateApi = async (id, data) => {
+export const handleUserUpdateApi = async (id: any, data: any) => {
   try {
     const res = await axios.put(`${BASE_URL}/users/${id}`, { ...data });
 
@@ -117,9 +117,9 @@ export const handleUserUpdateApi = async (id, data) => {
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};
 
-export const handleAddPizzaApi = async (pizza) => {
+export const handleAddPizzaApi = async (pizza: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/pizzas`, { ...pizza });
 
@@ -133,7 +133,7 @@ export const handleAddPizzaApi = async (pizza) => {
   }
 };
 
-export const orderApi = async (order) => {
+export const orderApi = async (order: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/orders`, { order });
 
@@ -147,7 +147,7 @@ export const orderApi = async (order) => {
   }
 };
 
-export const orderStatusUpdateApi = async (id, status) => {
+export const orderStatusUpdateApi = async (id: any, status: any) => {
   try {
     const res = await axios.put(`${BASE_URL}/orders/${id}`, { status });
 
@@ -159,7 +159,7 @@ export const orderStatusUpdateApi = async (id, status) => {
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};
 
 export const fetchUsers = async () => {
   try {
@@ -175,7 +175,7 @@ export const fetchUsers = async () => {
   }
 }
 
-export const deleteUserApi = async (id) => {
+export const deleteUserApi = async (id: any) => {
   try {
     const res = await axios.delete(`${BASE_URL}/users/${id}`);
 
@@ -187,7 +187,7 @@ export const deleteUserApi = async (id) => {
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};
 
 export const fetchRoles = async () => {
   try {
@@ -203,12 +203,12 @@ export const fetchRoles = async () => {
   }
 };
 
-export const handleAddRoleApi = async (data) => {
+export const handleAddRoleApi = async (data: any) => {
   try {
     const res = await axios.post(`${BASE_URL}/roles`, { ...data });
 
     if (!res || res.status !== 201) {
-      return {error: 'An error occurred'};
+      return { error: 'An error occurred' };
     }
 
     return res.data;
@@ -217,7 +217,7 @@ export const handleAddRoleApi = async (data) => {
   }
 };
 
-export const updateRoleStatus = async (status) => {
+export const updateRoleStatus = async (status: any) => {
   try {
     const res = await axios.put(`${BASE_URL}/roles/${id}`, { status });
 
@@ -229,18 +229,18 @@ export const updateRoleStatus = async (status) => {
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};
 
-export const deleteRoleApi = async (id) => {
+export const deleteRoleApi = async (id: any) => {
   try {
     const res = await axios.delete(`${BASE_URL}/roles/${id}`);
 
     if (!res || res.status !== 200) {
-      return {error: "An error occurred"};
+      return { error: 'An error occurred' };
     }
 
     return res.data;
   } catch (error) {
     return { error: 'An error occurred' };
   }
-}
+};

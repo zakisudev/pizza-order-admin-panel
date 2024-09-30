@@ -100,7 +100,7 @@ const PizzaDetails = ({ params }:any) => {
   };
 
   const handleOrderMinus = () => {
-    if (quantity === 1) {
+    if ((quantity) === 1) {
       return;
     }
 

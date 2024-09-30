@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   pizza: {},
   type: '',
-  toppings: [],
+  toppings: [] as string[],
   quantity: 1,
 };
 
@@ -11,25 +11,25 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    setPizza: (state, action) => {
+    setPizza: (state, action: PayloadAction<string>) => {
       state.pizza = action.payload;
     },
 
-    setType: (state, action) => {
+    setType: (state, action: PayloadAction<string>) => {
       state.type = action.payload;
     },
 
-    addTopping: (state, action) => {
-      state.toppings.push(action.payload);
+    addTopping: (state, action: PayloadAction<string>) => {
+      state.toppings?.push(action?.payload as string);
     },
 
-    removeTopping: (state, action) => {
-      state.toppings = state.toppings.filter(
-        (topping) => topping !== action.payload
+    removeTopping: (state, action: PayloadAction<string>) => {
+      state.toppings = state.toppings?.filter(
+        (topping: any) => topping !== action.payload
       );
     },
 
-    setQuantity: (state, action) => {
+    setQuantity: (state, action: PayloadAction<number>) => {
       state.quantity = action.payload;
     },
 

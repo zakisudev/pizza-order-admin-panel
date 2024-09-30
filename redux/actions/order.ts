@@ -1,11 +1,11 @@
 import orderTypes from '@/redux/types/order';
 
-export const setOrder = (order) => {
+export const setOrder = (order: any) => {
   return {
     type: orderTypes.MAKE_ORDER,
     payload: order,
   };
-}
+};
 
 export const fetchOrders = () => {
   return {
@@ -13,9 +13,9 @@ export const fetchOrders = () => {
   };
 }
 
-export const fetchOrder = (id) => {
+export const fetchOrder = (id: any) => {
   return {
     type: orderTypes.FETCH_ORDER,
     payload: id,
   };
-}
+};

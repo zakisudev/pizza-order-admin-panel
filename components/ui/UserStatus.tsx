@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 
-const UserStatus = ({ user }) => {
+const UserStatus = ({ user }:any) => {
  const [isActive, setIsActive] = useState(user?.status === 'active' || false)
 
   const handleToggleStatus = () => {

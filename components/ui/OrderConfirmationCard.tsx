@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import checkMark from '@/assets/icons/whiteCheck.png';
 
-const OrderConfirmationCard = ({title}) => {
+const OrderConfirmationCard = ({title}:any) => {
   return (
     <div className="flex justify-center items-center bg-black/70 fixed z-20 top-0 bottom-0 right-0 left-0 inset-0">
       <div className="w-[90%] sm:w-[857px] h-[591px] bg-white rounded-xl justify-center px-[127px]">
